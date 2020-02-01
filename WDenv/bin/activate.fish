@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/connorbowman/Wheel_Deals/WDenv"
+set -gx VIRTUAL_ENV "/drives/C/Users/jbkul/Desktop/GitHub/Wheel_Deals/WDenv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

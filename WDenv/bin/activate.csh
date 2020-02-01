@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/Users/connorbowman/Wheel_Deals/WDenv"
+setenv VIRTUAL_ENV "/drives/C/Users/jbkul/Desktop/GitHub/Wheel_Deals/WDenv"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"
