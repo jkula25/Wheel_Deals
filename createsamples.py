@@ -1,3 +1,5 @@
+# NOT USED
+
 from pymongo import MongoClient
 from random import randint
 #Step 1: Connect to MongoDB - Note: Change connection string as needed
