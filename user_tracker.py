@@ -2,6 +2,7 @@ import requests
 import time
 from datetime import datetime
 from geopy.distance import geodesic
+from connector import Connector
 
 class User_Tracker:
     def __init__(self):
@@ -40,8 +41,15 @@ if __name__ == "__main__":
     test_user = User_Tracker()
     total_miles = 0.0
     test_user.locate()
-    
+
+    cluster = Connector()
+    cluster.connectDB()
+    user_id = cluster.get_user_id("Kulateral")
+    # cluster.reset_all_miles()
+    cluster.print_user(user_id)
+
     while True:
+        print("----------------------------------------------------------------------------------------------------")
         # poll new location every 5 seconds
         time.sleep(5)
         test_user.locate()
@@ -51,7 +59,6 @@ if __name__ == "__main__":
         # previously recorded coordinate
         time2 = int(list(test_user.get_locations().keys())[-2])
 
-        # distance = test_user.get_distance((a,b), (c,d))
         currCoord = (float(test_user.get_locations()[time1][0]), float(test_user.get_locations()[time1][1]))
         prevCoord = (float(test_user.get_locations()[time2][0]), float(test_user.get_locations()[time2][1]))
         print(prevCoord)
@@ -59,6 +66,7 @@ if __name__ == "__main__":
 
         # calculates distance from the user's coordinates from 5 seconds ago and their current coordinates
         distance = test_user.get_distance(prevCoord, currCoord)
+        # distance = test_user.get_distance((a,b), (c,d))
         print("DIST: " + str(distance))
         mph = distance / float(((time1-time2)/3600))
         print("MPH: " + str(mph))
@@ -66,6 +74,9 @@ if __name__ == "__main__":
             print("WHOA that's too fast! Make sure you're not driving to qualify for the discounts.")
         else:
             total_miles += distance
+            cluster.increment_total_miles(user_id, distance)
         print("TOTAL MILES: " + str(total_miles))
+        cluster.print_user(user_id)
+
 
 

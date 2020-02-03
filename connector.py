@@ -29,7 +29,7 @@ class Connector:
 
     def store_user(self, name, username):
         # prevent users with the same username
-        if (self.__users.find_one( {"username": username} )):
+        if (self.__users.find_one( {'username': username} )):
             print("Sorry, that username is already taken.")
             return
         user = {"name": name,
@@ -39,16 +39,27 @@ class Connector:
         user_id = self.__users.insert_one(user).inserted_id
         return user_id
 
+    def get_user_id(self, username):
+        return self.__users.find_one({'username': username})['_id']
+
+    def print_user(self, user_id):
+        pprint(self.__users.find_one({'_id': user_id}))
+
     def get_users(self):
         return self.__users
 
     def delete_user(self, username):
-        return self.__users.find_one_and_delete({"username": username})
+        return self.__users.find_one_and_delete({'username': username})
     
     def list_users(self):
         for user in self.__users.find():
             pprint(user)
     
+    def increment_total_miles(self, user_id, miles):
+        self.__users.find_one_and_update({ '_id': user_id }, { '$inc': { 'total_miles': miles } })
+    
+    def reset_all_miles(self):
+        self.__users.update_many({ }, { '$set': { 'total_miles': 0.0 } })
 
 if __name__ == "__main__":
     # connect to MongoDB
